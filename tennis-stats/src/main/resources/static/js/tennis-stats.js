@@ -372,35 +372,37 @@ function decorateSurface(selector) {
 	});
 }
 
-function courtSpeedFormatter(column, row) {
-	return formatCourtSpeed(row.courtSpeed, row.surface);
+function speedFormatter(column, row) {
+	return formatSpeed(row.speed, row.surface);
 }
 
-function formatCourtSpeed(speed, surface) {
+function formatSpeed(speed, surface) {
 	if (!speed) return "";
-	return "<span class='label points-" + courtSpeedClassSuffix(speed) + " points-" + surface + "' title='" + courtSpeedTitle(speed) + "'>" + speed + "</span>";
+	return "<span class='label points-" + speedClassSuffix(speed) + " points-" + surface + "' title='" + speedTitle(speed) + "'>" + speed + "</span>";
 }
 
-function courtSpeedsFormatter(column, row) {
+function speedsFormatter(column, row) {
 	var surfaces = row.surfaces;
-	var courtSpeeds = row.courtSpeeds;
+	var speeds = row.speeds;
 	var s = "";
 	for (var i = 0, count = Math.min(3, surfaces.length); i < count; i++) {
 		if (s !== "") s += " ";
 		var surface = surfaces[i];
-		var speed = courtSpeeds[surface];
+		var speed = speeds[surface];
 		if (speed)
-			s += "<span class='label points-" + courtSpeedClassSuffix(speed) + " points-" + surface + "' title='" + courtSpeedTitle(speed) + " " + surfaceName(surface) + "'>" + speed + "</span>";
+			s += "<span class='label points-" + speedClassSuffix(speed) + " points-" + surface + "' title='" + speedTitle(speed) + " " + surfaceName(surface) + "'>" + speed + "</span>";
 	}
 	return s;
 }
 
-function courtSpeedClassSuffix(speed) {
+function speedClassSuffix(speed) {
 	return Math.floor(speed / 10) * 10;
 }
 
-function courtSpeedTitle(speed) {
-	if (speed < 20)
+function speedTitle(speed) {
+	if (speed < 10)
+		return "Utterly slow";
+	else if (speed < 20)
 		return "Extra slow";
 	else if (speed < 30)
 		return "Very slow";
@@ -419,11 +421,11 @@ function courtSpeedTitle(speed) {
 	return "Extra fast";
 }
 
-function decorateCourtSpeed(selector) {
+function decorateSpeed(selector) {
 	$(selector).each(function() {
 		var $this = $(this);
 		var speed = $this.data("court-speed");
-		$this.addClass("points-" + courtSpeedClassSuffix(speed) + " points-" + $this.data("surface")).attr("title", courtSpeedTitle(speed));;
+		$this.addClass("points-" + speedClassSuffix(speed) + " points-" + $this.data("surface")).attr("title", speedTitle(speed));;
 	});
 }
 

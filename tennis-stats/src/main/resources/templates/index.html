@@ -70,7 +70,7 @@
 					"event": tournamentEventFormatterExtId,
 					"level": levelFormatter,
 					"surface": function(column, row) {
-						return formatSurface(row.surface, row.indoor) + (xl ? " " + formatCourtSpeed(row.courtSpeed, row.surface) : "");
+						return formatSurface(row.surface, row.indoor) + (xl ? " " + formatSpeed(row.speed, row.surface) : "");
 					},
 					"participation": participationFormatter,
 					"final": finalFormatter,

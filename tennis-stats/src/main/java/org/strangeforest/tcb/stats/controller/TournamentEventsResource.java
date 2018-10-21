@@ -24,7 +24,7 @@ public class TournamentEventsResource {
 		.put("date", "date")
 		.put("name", "name")
 		.put("surface", "surface")
-		.put("courtSpeed", "court_speed NULLS LAST")
+		.put("speed", "court_speed NULLS LAST")
 		.put("draw", "draw_type, draw_size")
 		.put("playerCount", "player_count")
 		.put("participation", "participation")
@@ -45,7 +45,7 @@ public class TournamentEventsResource {
 		@RequestParam(name = "searchPhrase", defaultValue="") String searchPhrase,
 		@RequestParam Map<String, String> requestParams
 	) {
-		TournamentEventFilter filter = new TournamentEventFilter(season, null, level, surface, indoor, tournamentId, null, searchPhrase);
+		TournamentEventFilter filter = new TournamentEventFilter(season, null, level, surface, indoor, null, tournamentId, null, searchPhrase);
 		String orderBy = BootgridUtil.getOrderBy(requestParams, ORDER_MAP, DEFAULT_ORDER);
 		int pageSize = rowCount > 0 ? rowCount : MAX_TOURNAMENT_EVENTS;
 		return tournamentService.getTournamentEventsTable(filter, orderBy, pageSize, current);

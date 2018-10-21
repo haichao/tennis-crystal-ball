@@ -13,7 +13,7 @@
 		$(function() {
 			var $tournamentsTable = $("#tournamentsTable");
 			var device = detectDevice();
-			setBootgridColumnsVisible($tournamentsTable, ["courtSpeeds"], deviceGreaterOrEqual(device, "xl"));
+			setBootgridColumnsVisible($tournamentsTable, ["speeds"], deviceGreaterOrEqual(device, "xl"));
 			setBootgridColumnsVisible($tournamentsTable, ["seasons", "topPlayers"], deviceGreaterOrEqual(device, "lg"));
 			setBootgridColumnsVisible($tournamentsTable, ["strength", "averageEloRating"], deviceGreaterOrEqual(device, "md"));
 			setBootgridColumnsVisible($tournamentsTable, ["participation"], deviceGreaterOrEqual(device, "sm"));
@@ -58,7 +58,7 @@
 						}
 						return s;
 					},
-					"courtSpeeds": courtSpeedsFormatter,
+					"speeds": speedsFormatter,
 					"eventCount": function(column, row) {
 					  	return "<a href='/tournamentEvents?tournamentId=" + row.id + filterParams() + "' title='Show tournament events'>" + row.eventCount + "</a>";
 					},
@@ -96,7 +96,7 @@
 			$search.after($("#clearDiv").remove());
 			setBootgridTitle($tournamentsTableHeader, $("#tournamentsTable-title"));
 			setBootgridTitles($tournamentsTable, [
-				{id: "courtSpeeds", title: "[[#{event.courtSpeed.title}]]"},
+				{id: "speeds", title: "[[#{event.courtSpeed.title}]]"},
 				{id: "playerCount", title: "Average players"},
 				{id: "participation", title: "[[#{event.participation.title}]]"},
 				{id: "strength", title: "[[#{event.strength.title}]]"},
@@ -161,7 +161,7 @@
 			<th data-column-id="name" data-formatter="tournament" data-width="200">Name</th>
 			<th data-column-id="levels" data-formatter="levels" data-width="140">Level</th>
 			<th data-column-id="surfaces" data-formatter="surfaces" data-width="110">Surface</th>
-			<th data-column-id="courtSpeeds" data-formatter="courtSpeeds" data-width="70">Speed</th>
+			<th data-column-id="speeds" data-formatter="speeds" data-width="70">Speed</th>
 			<th data-column-id="eventCount" data-formatter="eventCount" data-width="75">Events</th>
 			<th data-column-id="seasons" data-formatter="seasons" data-width="180" data-sortable="false">Seasons</th>
 			<th data-column-id="playerCount" data-type="numeric" data-visible="false" data-width="55" data-align="right" data-header-align="right">Pls.</th>

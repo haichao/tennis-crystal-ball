@@ -54,6 +54,18 @@ public class MinEntries {
 		.put(Boolean.FALSE, 0.75)
 		.put(Boolean.TRUE,  0.25)
 	.build();
+	private static final Map<Range<Integer>, Double> MIN_ENTRIES_SPEED_WEIGHT_MAP = ImmutableMap.<Range<Integer>, Double>builder()
+		.put(Range.closed( 0,  9), 0.05)
+		.put(Range.closed(10, 19), 0.05)
+		.put(Range.closed(20, 29), 0.10)
+		.put(Range.closed(30, 39), 0.25)
+		.put(Range.closed(40, 49), 0.40)
+		.put(Range.closed(50, 59), 0.50)
+		.put(Range.closed(60, 69), 0.40)
+		.put(Range.closed(70, 79), 0.25)
+		.put(Range.closed(80, 89), 0.10)
+		.put(Range.atLeast(90),    0.05)
+	.build();
 	private static final Map<String, Double> MIN_ENTRIES_ROUND_WEIGHT_MAP = ImmutableMap.<String, Double>builder()
 		.put("F",    0.1)
 		.put("BR",   0.005)
@@ -153,7 +165,9 @@ public class MinEntries {
 			minEntries *= getMinEntriesSummedWeight(filter.getSurface(), MIN_ENTRIES_SURFACE_WEIGHT_MAP);
 		if (filter.hasIndoor())
 			minEntries *= getMinEntriesWeight(filter.getIndoor(), MIN_ENTRIES_INDOOR_WEIGHT_MAP);
-		
+		if (filter.hasSpeedRange())
+			minEntries *= getMinEntriesWeight(filter.getSpeedRange(), MIN_ENTRIES_SPEED_WEIGHT_MAP);
+
 		if (filter.hasRound())
 			minEntries *= getMinEntriesWeight(filter.getRound(), MIN_ENTRIES_ROUND_WEIGHT_MAP);
 		else if (filter.hasResult())

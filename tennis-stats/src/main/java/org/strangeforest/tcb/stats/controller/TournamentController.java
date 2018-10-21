@@ -58,7 +58,6 @@ public class TournamentController extends PageController {
 		@RequestParam(name = "tournamentId", required = false) Integer tournamentId
 	) {
 		List<Integer> seasons = dataService.getSeasons();
-		List<TournamentItem> tournaments = tournamentService.getTournaments();
 
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("season", season);
@@ -71,7 +70,7 @@ public class TournamentController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.INDIVIDUAL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("tournaments", tournaments);
+		modelMap.addAttribute("tournaments", tournamentService.getTournaments());
 		return new ModelAndView("tournamentEvents", modelMap);
 	}
 
