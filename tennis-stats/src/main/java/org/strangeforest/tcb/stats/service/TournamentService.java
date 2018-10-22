@@ -45,10 +45,10 @@ public class TournamentService {
 
 	private static final String TOURNAMENTS_QUERY = //language=SQL
 		"WITH player_tournament_titles AS (\n" +
-		"  SELECT e.tournament_id, r.player_id, count(tournament_event_id) titles, max(e.date) last_date\n" +
+		"  SELECT e.tournament_id, r.player_id, count(e.tournament_event_id) titles, max(e.date) last_date\n" +
 		"  FROM player_tournament_event_result r\n" +
-		"  INNER JOIN tournament_event e USING (tournament_event_id)\n" +
-		"  WHERE r.result = 'W'%1$s\n" +
+		"  INNER JOIN tournament_event e USING (tournament_event_id)%1$s\n" +
+		"  WHERE r.result = 'W'%2$s\n" +
 		"  GROUP BY e.tournament_id, r.player_id\n" +
 		"), player_tournament_titles_ranked AS (\n" +
 		"  SELECT tournament_id, player_id, titles, rank() OVER (PARTITION BY tournament_id ORDER BY titles DESC, last_date) AS rank,\n" +
@@ -61,7 +61,7 @@ public class TournamentService {
 		"    FROM tournament_event e\n" +
 		"    INNER JOIN event_participation p USING (tournament_event_id)\n" +
 		"    LEFT JOIN event_stats es USING (tournament_event_id)\n" +
-		"    WHERE e.tournament_id = t.tournament_id%1$s\n" +
+		"    WHERE e.tournament_id = t.tournament_id%2$s\n" +
 		"    ORDER BY season\n" +
 		"  ) AS event)) AS events,\n" +
 		"  array_to_json(array(SELECT row_to_json(top_player) FROM (\n" +
@@ -243,7 +243,7 @@ public class TournamentService {
 	@Cacheable("Tournaments")
 	public List<Tournament> getTournaments(TournamentEventFilter filter) {
 		List<Tournament> tournaments = jdbcTemplate.query(
-			format(TOURNAMENTS_QUERY, filter.getCriteria()),
+			format(TOURNAMENTS_QUERY, filter.hasSpeedRange() ? EVENT_STATS_JOIN : "", filter.getCriteria()),
 			filter.getParams(),
 			(rs, rowNum) -> mapTournament(rs)
 		);

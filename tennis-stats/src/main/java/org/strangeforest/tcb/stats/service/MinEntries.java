@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.strangeforest.tcb.stats.model.core.*;
 
 import com.google.common.collect.*;
 
@@ -54,17 +55,14 @@ public class MinEntries {
 		.put(Boolean.FALSE, 0.75)
 		.put(Boolean.TRUE,  0.25)
 	.build();
-	private static final Map<Range<Integer>, Double> MIN_ENTRIES_SPEED_WEIGHT_MAP = ImmutableMap.<Range<Integer>, Double>builder()
-		.put(Range.closed( 0,  9), 0.05)
-		.put(Range.closed(10, 19), 0.05)
-		.put(Range.closed(20, 29), 0.10)
-		.put(Range.closed(30, 39), 0.25)
-		.put(Range.closed(40, 49), 0.40)
-		.put(Range.closed(50, 59), 0.50)
-		.put(Range.closed(60, 69), 0.40)
-		.put(Range.closed(70, 79), 0.25)
-		.put(Range.closed(80, 89), 0.10)
-		.put(Range.atLeast(90),    0.05)
+	private static final Map<CourtSpeed, Double> MIN_ENTRIES_SPEED_WEIGHT_MAP = ImmutableMap.<CourtSpeed, Double>builder()
+		.put(CourtSpeed.VERY_FAST, 0.015)
+		.put(CourtSpeed.FAST, 0.075)
+		.put(CourtSpeed.MEDIUM_FAST, 0.15)
+		.put(CourtSpeed.MEDIUM, 0.25)
+		.put(CourtSpeed.MEDIUM_SLOW, 0.15)
+		.put(CourtSpeed.SLOW, 0.075)
+		.put(CourtSpeed.VERY_SLOW, 0.015)
 	.build();
 	private static final Map<String, Double> MIN_ENTRIES_ROUND_WEIGHT_MAP = ImmutableMap.<String, Double>builder()
 		.put("F",    0.1)
@@ -166,7 +164,7 @@ public class MinEntries {
 		if (filter.hasIndoor())
 			minEntries *= getMinEntriesWeight(filter.getIndoor(), MIN_ENTRIES_INDOOR_WEIGHT_MAP);
 		if (filter.hasSpeedRange())
-			minEntries *= getMinEntriesWeight(filter.getSpeedRange(), MIN_ENTRIES_SPEED_WEIGHT_MAP);
+			minEntries *= getMinEntriesWeight(CourtSpeed.forSpeedRange(filter.getSpeedRange()), MIN_ENTRIES_SPEED_WEIGHT_MAP);
 
 		if (filter.hasRound())
 			minEntries *= getMinEntriesWeight(filter.getRound(), MIN_ENTRIES_ROUND_WEIGHT_MAP);

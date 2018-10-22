@@ -74,17 +74,14 @@ public class RivalriesService {
 		.put(Boolean.FALSE, 1.4)
 		.put(Boolean.TRUE,  2.5)
 	.build();
-	private static final Map<Range<Integer>, Double> MIN_MATCHES_SPEED_FACTOR = ImmutableMap.<Range<Integer>, Double>builder()
-		.put(Range.closed( 0,  9), 20.0)
-		.put(Range.closed(10, 19), 20.0)
-		.put(Range.closed(20, 29), 20.0)
-		.put(Range.closed(30, 39),  7.0)
-		.put(Range.closed(40, 49),  4.0)
-		.put(Range.closed(50, 59),  3.0)
-		.put(Range.closed(60, 69),  3.5)
-		.put(Range.closed(70, 79),  5.0)
-		.put(Range.closed(80, 89), 20.0)
-		.put(Range.atLeast(90),    20.0)
+	private static final Map<CourtSpeed, Double> MIN_MATCHES_SPEED_FACTOR = ImmutableMap.<CourtSpeed, Double>builder()
+		.put(CourtSpeed.VERY_FAST, 20.0)
+		.put(CourtSpeed.FAST, 8.0)
+		.put(CourtSpeed.MEDIUM_FAST, 4.0)
+		.put(CourtSpeed.MEDIUM, 3.0)
+		.put(CourtSpeed.MEDIUM_SLOW, 4.0)
+		.put(CourtSpeed.SLOW, 8.0)
+		.put(CourtSpeed.VERY_SLOW, 20.0)
 	.build();
 	private static final Map<String, Double> MIN_MATCHES_ROUND_FACTOR = ImmutableMap.<String, Double>builder()
 		.put("F",     5.0)
@@ -395,7 +392,7 @@ public class RivalriesService {
 		if (filter.hasIndoor())
 			minMatches /= getMinMatchesFactor(filter.getIndoor(), MIN_MATCHES_INDOOR_FACTOR);
 		if (filter.hasSpeedRange())
-			minMatches /= getMinMatchesFactor(filter.getSpeedRange(), MIN_MATCHES_SPEED_FACTOR);
+			minMatches /= getMinMatchesFactor(CourtSpeed.forSpeedRange(filter.getSpeedRange()), MIN_MATCHES_SPEED_FACTOR);
 
 		if (filter.hasRound())
 			minMatches /= getMinMatchesFactor(filter.getRound(), MIN_MATCHES_ROUND_FACTOR);

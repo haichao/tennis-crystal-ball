@@ -400,11 +400,7 @@ function speedClassSuffix(speed) {
 }
 
 function speedTitle(speed) {
-	if (speed < 10)
-		return "Utterly slow";
-	else if (speed < 20)
-		return "Extra slow";
-	else if (speed < 30)
+	if (speed < 30)
 		return "Very slow";
 	else if (speed < 40)
 		return "Slow";
@@ -416,9 +412,7 @@ function speedTitle(speed) {
 		return "Medium fast";
 	else if (speed < 80)
 		return "Fast";
-	else if (speed < 90)
-		return "Very fast";
-	return "Extra fast";
+	return "Very fast";
 }
 
 function decorateSpeed(selector) {
@@ -714,6 +708,8 @@ function performancePlayerMatchesUrl(playerId, outcome, prefix) {
 	}
 	var indoor = paramValue("indoor", prefix);
 	if (indoor) url += "&indoor=" + indoor;
+	var speed = paramValue("speed", prefix);
+	if (speed) url += "&speed=" + speed;
 	if (category == "finals") {
 		url += "&round=F";
 		if (!level) url += "&level=GFLMOAB";
@@ -771,6 +767,8 @@ function statisticsPlayerMatchesUrl(playerId, prefix) {
 	if (surface) url += "&surface=" + surface;
 	var indoor = paramValue("indoor", prefix);
 	if (indoor) url += "&indoor=" + indoor;
+	var speed = paramValue("speed", prefix);
+	if (speed) url += "&speed=" + speed;
 	var round = paramValue("round", prefix);
 	if (round) {
 		url += "&round=" + encodeURIComponent(round);

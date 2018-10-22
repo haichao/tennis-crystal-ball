@@ -157,7 +157,7 @@
 			<div class="col-md-2">
 				<select id="speed" class="form-control" onchange="reloadStatsTimeline()" data-toggle="tooltip" data-placement="top" title="Filter by court speed">
 					<option value="">All speeds</option>
-					<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speedFrom}" th:class="|points-${aSpeed.speedFrom}|" th:style="|color: ${aSpeed.speedFrom > 20 ? 'white' : 'darkgray'}|" value="50" class="points-50" th:text="${aSpeed.text}" th:selected="${aSpeed.speedFrom == speed}">Medium</option>
+					<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|" style="color: white" value="50" class="points-50" th:text="${aSpeed.text}" th:selected="${aSpeed.speed == speed}">Medium</option>
 				</select>
 			</div>
 			<div class="col-md-4">
@@ -181,7 +181,7 @@
 		<tr>
 			<th style="border-right: 3px solid lightgray">Season</th>
 			<th th:each="season : ${stats.keySet()}" th:if="${season}" class="season">
-				<a th:href="@{/season(season=${season}, tab=statistics, level=${level}, bestOf=${bestOf}, surface=${surface}, indoor=${indoor}, round=${round}, tournamentId=${tournamentId})}" th:text="${season}" title="Show season">2018</a>
+				<a th:href="@{/season(season=${season}, tab=statistics, level=${level}, bestOf=${bestOf}, surface=${surface}, indoor=${indoor}, speed=${speed}, round=${round}, tournamentId=${tournamentId})}" th:text="${season}" title="Show season">2018</a>
 			</th>
 			<th class="season">Total</th>
 		</tr>
@@ -208,7 +208,7 @@
 		<tr style="border-top: 3px solid lightgray">
 			<th style="border-right: 3px solid lightgray">Season</th>
 			<th th:each="season : ${stats.keySet()}" th:if="${season}" class="season">
-				<a th:href="@{/season(season=${season}, tab=statistics, level=${level}, bestOf=${bestOf}, surface=${surface}, indoor=${indoor}, round=${round}, tournamentId=${tournamentId})}" th:text="${season}" title="Show season">2018</a>
+				<a th:href="@{/season(season=${season}, tab=statistics, level=${level}, bestOf=${bestOf}, surface=${surface}, indoor=${indoor}, speed=${speed}, round=${round}, tournamentId=${tournamentId})}" th:text="${season}" title="Show season">2018</a>
 			</th>
 			<th class="season">Total</th>
 		</tr>
